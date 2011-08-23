@@ -1,0 +1,11 @@
+
+syntax: regexp
+^default\.properties$
+syntax: regexp
+^proguard\.cfg$
+syntax: regexp
+^gen$
+syntax: regexp
+^bin$
+glob:.classpath
+glob:.project
