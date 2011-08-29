@@ -78,6 +78,7 @@ public class ButtonGridActivity extends Activity {
 			LayoutInflater li = getLayoutInflater();
 			View view = li.inflate(R.layout.buttongrid_template, null);
 			view.setMinimumHeight(view.getMeasuredWidth());
+			view.measure(view.getMeasuredWidth(), view.getMeasuredWidth());
 			view.invalidate();
 			
 			TextView label = (TextView) view.findViewById(R.id.buttonTemplateLabel);
