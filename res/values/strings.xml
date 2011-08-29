@@ -4,4 +4,5 @@
     <string name="app_name">Android Archetypes</string>
     <string name="image_mask_activity_label">Image Mask Demo</string>
     <string name="startup_activity_label">Startup Activity</string>
+    <string name="button_grid_activity_label">Button Grid Demo</string>
 </resources>

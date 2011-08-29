@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	>
+	<Button
+		android:id="@+id/buttonTemplateButton"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+	/>
+	<FrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="fill_vertical|fill_horizontal"
+	>
+	<ImageView 
+		android:id="@+id/buttonTemplateImage"
+		android:src="@android:drawable/gallery_thumb"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="fill_vertical|fill_horizontal"
+	/>
+	</FrameLayout>
+	<TextView 
+		android:id="@+id/buttonTemplateLabel"
+		android:text="Label"
+		android:textColor="@android:color/black"
+		android:textSize="30sp"
+		android:shadowColor="@android:color/white"
+		android:shadowRadius="2"
+		android:shadowDx="0"
+		android:shadowDy="0"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+	/>
+</FrameLayout>

@@ -39,6 +39,7 @@ public class StartupActivity extends Activity {
 			this.activity = activity;
 			
 			activityClasses.add(new ImageMaskActivity());
+			activityClasses.add(new ButtonGridActivity());
 		}
 
 		@Override
