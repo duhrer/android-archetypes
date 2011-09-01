@@ -40,6 +40,7 @@ public class StartupActivity extends Activity {
 			
 			activityClasses.add(new ImageMaskActivity());
 			activityClasses.add(new ButtonGridActivity());
+			activityClasses.add(new TouchEventActivity());
 		}
 
 		@Override
