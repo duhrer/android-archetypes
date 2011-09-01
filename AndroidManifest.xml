@@ -19,5 +19,8 @@
         <activity android:name=".activity.ButtonGridActivity"
                   android:label="@string/button_grid_activity_label"
         />
+        <activity android:name=".activity.TouchEventActivity"
+                  android:label="@string/touch_event_activity_label"
+        />
     </application>
 </manifest>
