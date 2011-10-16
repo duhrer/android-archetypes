@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  >
+	<TextView
+		android:text="@string/exception_catcher_exception_label"
+		  android:layout_width="match_parent"
+		  android:layout_height="wrap_content"
+		  android:layout_marginBottom="10dip"
+	/>
+
+	<TextView
+		android:id="@+id/exception_catcher_exception_body"
+		  android:layout_width="match_parent"
+		  android:layout_height="wrap_content"
+		  android:text="@string/exception_catcher_default_exception_body"
+		  android:padding="10dip"
+		  android:background="@drawable/darkgrayoutline"
+	/>
+	<ImageView
+		android:id="@+id/exception_catcher_thumbnail_view"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@android:drawable/picture_frame"
+	/>
+	<Button
+		  android:layout_gravity="right"
+		  android:layout_width="wrap_content"
+		  android:layout_height="wrap_content"
+		android:id="@+id/exception_catcher_close_button"
+		android:text="@string/exception_catcher_close_button_label"
+	/>
+</LinearLayout>

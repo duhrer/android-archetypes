@@ -5,13 +5,18 @@
   android:id="@+id/te_layout"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <ImageView android:src="@drawable/arrow_r_off" android:id="@+id/te_arrow_r" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_alignParentRight="true"></ImageView>
-    <ImageView android:src="@drawable/arrow_l_off" android:id="@+id/te_arrow_l" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
-    <ImageView android:src="@drawable/arrow_u_off" android:id="@+id/te_arrow_u" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></ImageView>
-    <ImageView android:src="@drawable/arrow_d_off" android:id="@+id/te_arrow_d" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"></ImageView>
-    <ImageView android:src="@drawable/pinch_in_off" android:id="@+id/te_pinch_in" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/te_arrow_l" android:layout_alignParentLeft="true" android:layout_marginLeft="42dp"></ImageView>
-    <ImageView android:src="@drawable/pinch_out_off" android:id="@+id/te_pinch_out" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignBottom="@+id/te_pinch_in" android:layout_toLeftOf="@+id/te_arrow_r"></ImageView>
-    <ImageView android:src="@drawable/spin_cw_off" android:id="@+id/te_spin_cw" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/te_arrow_u" android:layout_alignLeft="@+id/te_pinch_out"></ImageView>
-    <ImageView android:src="@drawable/spin_ccw_off" android:id="@+id/te_spin_ccw" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_above="@+id/te_arrow_l" android:layout_toLeftOf="@+id/te_spin_cw"></ImageView>
+    <ImageView android:src="@drawable/arrow_r_off" android:id="@+id/te_arrow_r"
+	android:layout_height="wrap_content" android:layout_width="50sp"
+	android:layout_centerVertical="true" android:layout_alignParentRight="true"/>
+    <ImageView android:src="@drawable/arrow_l_off" android:id="@+id/te_arrow_l" android:layout_height="wrap_content" android:layout_width="50sp" android:layout_centerVertical="true" android:layout_alignParentLeft="true"></ImageView>
+    <ImageView android:src="@drawable/arrow_u_off" android:id="@+id/te_arrow_u" android:layout_height="50sp" android:layout_width="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"></ImageView>
+    <ImageView android:src="@drawable/arrow_d_off" android:id="@+id/te_arrow_d" android:layout_height="50sp" android:layout_width="wrap_content" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"></ImageView>
+    <ImageView android:id="@+id/te_spin_ccw" android:layout_width="75sp" android:layout_height="wrap_content" android:src="@drawable/spin_ccw_off" android:layout_below="@+id/te_arrow_u" android:layout_toRightOf="@+id/te_arrow_l"></ImageView>
+    <ImageView android:id="@+id/te_spin_cw" android:layout_width="75sp" android:layout_height="wrap_content" android:src="@drawable/spin_cw_off" android:layout_alignTop="@+id/te_spin_ccw" android:layout_toLeftOf="@+id/te_arrow_r"></ImageView>
+    <ImageView android:id="@+id/te_pinch_in" android:layout_width="75sp" android:layout_height="wrap_content" android:src="@drawable/pinch_in_off" android:layout_above="@+id/te_arrow_d" android:layout_toRightOf="@+id/te_arrow_l"></ImageView>
+    <ImageView android:id="@+id/te_pinch_out" android:layout_width="75sp" android:layout_height="wrap_content" android:src="@drawable/pinch_out_off" android:layout_alignBottom="@+id/te_pinch_in" android:layout_toLeftOf="@+id/te_arrow_r"></ImageView>
+    <TextView android:id="@+id/te_touch_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_centerHorizontal="true" android:text="0" android:textSize="50dp"/>
+    <TextView android:text="0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/te_touch_diff_y" android:textSize="50dp" android:layout_above="@+id/te_pinch_in" android:layout_centerHorizontal="true"></TextView>
+    <TextView android:text="0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/te_touch_diff_x" android:textSize="50dp" android:layout_below="@+id/te_spin_ccw" android:layout_alignLeft="@+id/te_touch_diff_y"></TextView>
     
 </RelativeLayout>

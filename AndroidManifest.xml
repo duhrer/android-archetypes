@@ -22,5 +22,13 @@
         <activity android:name=".activity.TouchEventActivity"
                   android:label="@string/touch_event_activity_label"
         />
+        
+        <activity android:name=".activity.ExceptionPitcherActivity"
+                  android:label="@string/exception_pitcher_activity_label"
+        />
+        
+        <activity android:name=".activity.ExceptionCatcherActivity"
+                  android:label="@string/exception_catcher_activity_label"
+		/>
     </application>
 </manifest>

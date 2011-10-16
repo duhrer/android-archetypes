@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, StartupActivity!</string>
     <string name="app_name">Android Archetypes</string>
     <string name="image_mask_activity_label">Image Mask Demo</string>
-    <string name="startup_activity_label">Startup Activity</string>
+    <string name="startup_activity_label">Android Archetypes</string>
     <string name="button_grid_activity_label">Button Grid Demo</string>
     <string name="touch_event_activity_label">Touch Event Demo</string>
+    <string name="exception_pitcher_activity_label">Exception Pitcher Demo</string>
+    <string name="exception_pitcher_exception_button">Throw Exception</string>
+    <string name="exception_pitcher_exception_label">Touch the button to throw an exception.</string>
+    <string name="exception_catcher_activity_label">Exception Catcher Demo</string>
+    <string name="exception_catcher_exception_label">The application encountered an error (see below for details):</string>
+    <string name="exception_catcher_default_exception_body">No error message found...</string>
+    <string name="exception_catcher_close_button_label">Close</string>
 </resources>

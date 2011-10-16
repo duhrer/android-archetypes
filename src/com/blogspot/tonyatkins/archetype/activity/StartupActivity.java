@@ -1,5 +1,6 @@
 package com.blogspot.tonyatkins.archetype.activity;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.blogspot.tonyatkins.archetype.R;
+import com.blogspot.tonyatkins.archetype.exception.SampleExceptionHandler;
 
 public class StartupActivity extends Activity {
     /** Called when the activity is first created. */
@@ -24,6 +26,10 @@ public class StartupActivity extends Activity {
         
         setContentView(R.layout.startup);
         
+        // Wire up the exception handling for the pitcher/catcher example
+        UncaughtExceptionHandler handler = new SampleExceptionHandler(this, ExceptionCatcherActivity.class);
+		Thread.setDefaultUncaughtExceptionHandler(handler);
+
         // Wire up the list of activities to its adapter 
         ListView activityListView = (ListView) findViewById(R.id.activityListView);
         
@@ -41,6 +47,7 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new ImageMaskActivity());
 			activityClasses.add(new ButtonGridActivity());
 			activityClasses.add(new TouchEventActivity());
+			activityClasses.add(new ExceptionPitcherActivity());
 		}
 
 		@Override
