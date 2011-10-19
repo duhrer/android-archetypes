@@ -24,6 +24,15 @@ public class StartupActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        // check to see if there was crash data from a previous instance
+        if (savedInstanceState != null) {
+        	if (savedInstanceState.getBoolean(SampleExceptionHandler.CRASHED_BUNDLE_KEY, false)) {
+        		Intent intent = new Intent(this, SampleExceptionHandler.class);
+        		intent.putExtras(savedInstanceState);
+        		startActivityForResult(intent, SampleExceptionHandler.SAMPLE_EXCEPTION_HANDLER_REQUEST_CODE);
+        	}
+        }
+        
         setContentView(R.layout.startup);
         
         // Wire up the exception handling for the pitcher/catcher example
