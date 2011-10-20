@@ -4,13 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import com.blogspot.tonyatkins.archetype.activity.ExceptionCatcherActivity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -19,15 +16,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 
 public class SampleExceptionHandler implements UncaughtExceptionHandler {
-	public static final String CRASHED_BUNDLE_KEY = "crashed";
-	public static final String EXCEPTION_BUNDLE_KEY = "throwable";
-	public static final String SCREENSHOT_BUNDLE_KEY = "screenshot";
+	public static final String SCREENSHOT_FILENAME = "/screenshot.png";
+	public static final String STACKTRACE_FILENAME = "/stacktrace.txt";
 	
 	public static final int SAMPLE_EXCEPTION_HANDLER_REQUEST_CODE = 111;
 	
@@ -54,8 +48,10 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 
 		try {
 			File crashDir = parentActivity.getDir(".crashes", Activity.MODE_WORLD_READABLE);
-
-			File stackTraceFile = new File(crashDir.getAbsolutePath() + "/stacktrace.txt");
+			File crashInstanceDir = new File(crashDir.getAbsolutePath() + "/" + timestamp);
+			crashInstanceDir.mkdir();
+			
+			File stackTraceFile = new File(crashInstanceDir.getAbsolutePath() + STACKTRACE_FILENAME);
 			PrintWriter stackwriter;
 			try {
 				stackwriter = new PrintWriter(stackTraceFile);
@@ -66,6 +62,7 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 				Log.e(getClass().getName(), "Error saving stack trace to file:", e);
 			}
 
+			// FIXME: This takes a screen shot of the root activity and not the crashing activity.
 			View contentView = parentActivity.findViewById(android.R.id.content);
 			if (contentView == null) {
 				Log.e(this.getClass().getName(),"Can't find content view to take screen shot.");
@@ -81,7 +78,7 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 					ByteArrayOutputStream output = new ByteArrayOutputStream();
 					bm.compress(CompressFormat.PNG, 100, output);
 					
-					File bitmapFile = new File(crashDir.getAbsolutePath() + "/screenshot.png");
+					File bitmapFile = new File(crashInstanceDir.getAbsolutePath() + SCREENSHOT_FILENAME);
 					FileOutputStream bitmapOutput;
 					try {
 						bitmapOutput = new FileOutputStream(bitmapFile);
@@ -97,7 +94,7 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 			Log.e(getClass().getName(), "Error retrieving working directory to save crash data:", e0);
 		}
 
-		Intent exceptionHandlingIntent = new Intent(parentActivity, ExceptionCatcherActivity.class);
+		Intent exceptionHandlingIntent = new Intent(parentActivity, exceptionHandlingActivityClass);
     	PendingIntent pendingIntent = PendingIntent.getActivity(parentActivity.getApplication().getBaseContext(), 0, exceptionHandlingIntent, exceptionHandlingIntent.getFlags());
 
     	AlarmManager mgr = (AlarmManager) parentActivity.getSystemService(Context.ALARM_SERVICE);

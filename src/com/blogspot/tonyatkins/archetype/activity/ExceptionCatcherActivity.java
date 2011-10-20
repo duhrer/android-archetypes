@@ -1,5 +1,13 @@
 package com.blogspot.tonyatkins.archetype.activity;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.CharBuffer;
+
 import com.blogspot.tonyatkins.archetype.R;
 import com.blogspot.tonyatkins.archetype.exception.SampleExceptionHandler;
 
@@ -23,31 +31,52 @@ public class ExceptionCatcherActivity extends Activity {
 		
 		Button closeButton = (Button) findViewById(R.id.exception_catcher_close_button);
 		closeButton.setOnClickListener(new ActivityQuitListener(this));
+
+		File crashDir = this.getDir(".crashes", Activity.MODE_WORLD_READABLE);
+		File[] crashInstances = crashDir.listFiles();
+		long newestTime = 0;
+		File newestCrashDir = null;
 		
-		if (savedInstanceState == null) {
-			Log.e(this.getClass().getName(), "No error data bundle received, I have nothing to display.");
+		for (File crashInstanceDir : crashInstances) {
+			if (crashInstanceDir.lastModified() > newestTime) {
+				newestTime = crashInstanceDir.lastModified();
+				newestCrashDir = crashInstanceDir;
+			}
+		}
+		
+		if (newestCrashDir == null ) {
+			Log.w(this.getClass().getName(), "No crash data found, exiting crash catcher activity.");
+			finish();
 		}
 		else {
-			Throwable t = (Throwable) savedInstanceState.getSerializable(SampleExceptionHandler.EXCEPTION_BUNDLE_KEY);
-			if (t == null) {
-				Log.w(this.getClass().getName(), "Throwable data was null in starting application bundle.");
+			File stackTraceFile = new File(newestCrashDir.getAbsolutePath() + "/" + SampleExceptionHandler.STACKTRACE_FILENAME);
+			FileReader reader;
+			try {
+				reader = new FileReader(stackTraceFile);
+				BufferedReader br = new BufferedReader(reader);
+				StringBuffer output = new StringBuffer();
+				String line;
+				while ((line = br.readLine()) != null) {
+					output.append(line + "\n");
+				}
+				
+				TextView view = (TextView) findViewById(R.id.exception_catcher_exception_body);
+				view.setText(output.toString());
+			} catch (Exception e) {
+				Log.e(getClass().getName(),"Error reading stacktrace file",e);
+			}
+
+			File screenshotFile = new File(newestCrashDir.getAbsolutePath() + "/" + SampleExceptionHandler.SCREENSHOT_FILENAME);
+			Bitmap bitmap = BitmapFactory.decodeFile(screenshotFile.getAbsolutePath());
+			ImageView imageView = (ImageView) findViewById(R.id.exception_catcher_thumbnail_view);
+			if (bitmap == null) {
+				Log.w(getClass().getName(), "Couldn't load bitmap data from screenshot file " + screenshotFile.getAbsolutePath());
+				imageView.setVisibility(View.INVISIBLE);
 			}
 			else {
-				TextView view = (TextView) findViewById(R.id.exception_catcher_exception_body);
-				view.setText(t.getCause().toString());
-			}
-			
-			byte[] byteArray = savedInstanceState.getByteArray(SampleExceptionHandler.SCREENSHOT_BUNDLE_KEY);
-			if (byteArray.length > 0) {
-				Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-				ImageView imageView = (ImageView) findViewById(R.id.exception_catcher_thumbnail_view);
 				imageView.setImageBitmap(bitmap);
 			}
-			else {
-				Log.i(this.getClass().getName(), "No screenshot data received in starting application bundle.");
-			}
 		}
-		
 	}
 	
 	private class ActivityQuitListener implements OnClickListener {
