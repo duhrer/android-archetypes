@@ -1,15 +1,12 @@
 package com.blogspot.tonyatkins.archetype.activity;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
-import com.blogspot.tonyatkins.archetype.R;
-import com.blogspot.tonyatkins.archetype.exception.SampleExceptionHandler;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import com.blogspot.tonyatkins.archetype.R;
 
 public class ExceptionPitcherActivity extends Activity {
 

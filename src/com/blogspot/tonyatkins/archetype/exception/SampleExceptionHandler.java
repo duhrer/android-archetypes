@@ -1,23 +1,23 @@
 package com.blogspot.tonyatkins.archetype.exception;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.util.Log;
-import android.view.View;
 
 public class SampleExceptionHandler implements UncaughtExceptionHandler {
 	public static final String SCREENSHOT_FILENAME = "/screenshot.png";
@@ -27,6 +27,8 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 	
 	private Activity parentActivity;
 	private Class exceptionHandlingActivityClass;
+
+	private Set<Activity> activities = new TreeSet<Activity>();
 	
 	/**
 	 * @param parentActivity The root-level activity for this application.
@@ -36,8 +38,13 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 		super();
 		this.parentActivity = parentActivity;
 		this.exceptionHandlingActivityClass = exceptionHandlingActivityClass;
+		registerActivity(parentActivity);
 	}
 
+	public void registerActivity(Activity activity) {
+		activities.add(activity);
+	}
+	
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		Log.e(this.getClass().getName(), "Caught exception, preparing to handle internally", ex);
@@ -62,34 +69,36 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 				Log.e(getClass().getName(), "Error saving stack trace to file:", e);
 			}
 
-			// FIXME: This takes a screen shot of the root activity and not the crashing activity.
-			View contentView = parentActivity.findViewById(android.R.id.content);
-			if (contentView == null) {
-				Log.e(this.getClass().getName(),"Can't find content view to take screen shot.");
-			}
-			else {
-				View v1 = contentView.getRootView();
-				if (v1 == null) {
-					Log.e(this.getClass().getName(),"Can't find root view to take screen shot.");
-				}
-				else {
-					v1.setDrawingCacheEnabled(true);
-					Bitmap bm = v1.getDrawingCache();
-					ByteArrayOutputStream output = new ByteArrayOutputStream();
-					bm.compress(CompressFormat.PNG, 100, output);
-					
-					File bitmapFile = new File(crashInstanceDir.getAbsolutePath() + SCREENSHOT_FILENAME);
-					FileOutputStream bitmapOutput;
-					try {
-						bitmapOutput = new FileOutputStream(bitmapFile);
-						bitmapOutput.write(output.toByteArray());
-						bitmapOutput.close();
-						Log.i(getClass().getName(), "Saved bitmap to file:" + bitmapFile.getAbsolutePath());
-					} catch (Exception e) {
-						Log.e(getClass().getName(), "Error saving screen shot to file:", e);
-					}
-				}
-			}
+			// TODO: Can't retrieve the activity that crashed and take a screen shot from its drawing cache yet.
+//			Activity currentActivity = getCurrentActivity();
+//			
+//			View contentView = currentActivity.findViewById(android.R.id.content);
+//			if (contentView == null) {
+//				Log.e(this.getClass().getName(),"Can't find content view to take screen shot.");
+//			}
+//			else {
+//				View v1 = contentView.getRootView();
+//				if (v1 == null) {
+//					Log.e(this.getClass().getName(),"Can't find root view to take screen shot.");
+//				}
+//				else {
+//					v1.setDrawingCacheEnabled(true);
+//					Bitmap bm = v1.getDrawingCache();
+//					ByteArrayOutputStream output = new ByteArrayOutputStream();
+//					bm.compress(CompressFormat.PNG, 100, output);
+//					
+//					File bitmapFile = new File(crashInstanceDir.getAbsolutePath() + SCREENSHOT_FILENAME);
+//					FileOutputStream bitmapOutput;
+//					try {
+//						bitmapOutput = new FileOutputStream(bitmapFile);
+//						bitmapOutput.write(output.toByteArray());
+//						bitmapOutput.close();
+//						Log.i(getClass().getName(), "Saved bitmap to file:" + bitmapFile.getAbsolutePath());
+//					} catch (Exception e) {
+//						Log.e(getClass().getName(), "Error saving screen shot to file:", e);
+//					}
+//				}
+//			}
 		} catch (Exception e0) {
 			Log.e(getClass().getName(), "Error retrieving working directory to save crash data:", e0);
 		}
@@ -102,5 +111,22 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
     	System.exit(2);
     
     	parentActivity.startActivity(exceptionHandlingIntent);
+	}
+
+	private Activity getCurrentActivity() {
+        ActivityManager am = (ActivityManager) parentActivity.getSystemService( Activity.ACTIVITY_SERVICE);
+ 
+        // get the info from the currently running task
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        RunningTaskInfo activityInfo = taskInfo.get(0);
+        Class runningActivityClass = activityInfo.getClass();
+	        
+        for (Activity activity : activities) {
+        	if (activity.getClass() == runningActivityClass) {
+        		return activity;
+        	}
+        }
+        
+		return parentActivity;
 	}
 }

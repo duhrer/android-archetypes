@@ -2,14 +2,7 @@ package com.blogspot.tonyatkins.archetype.activity;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.CharBuffer;
-
-import com.blogspot.tonyatkins.archetype.R;
-import com.blogspot.tonyatkins.archetype.exception.SampleExceptionHandler;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -21,6 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blogspot.tonyatkins.archetype.R;
+import com.blogspot.tonyatkins.archetype.exception.SampleExceptionHandler;
 
 public class ExceptionCatcherActivity extends Activity {
 
