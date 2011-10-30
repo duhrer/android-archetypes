@@ -6,13 +6,8 @@ import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,8 +23,6 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 	private Activity parentActivity;
 	private Class exceptionHandlingActivityClass;
 
-	private Set<Activity> activities = new TreeSet<Activity>();
-	
 	/**
 	 * @param parentActivity The root-level activity for this application.
 	 * @param exceptionHandlingActivity The activity that will handle the exception (it will be passed the exception in a bundle).
@@ -38,11 +31,6 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
 		super();
 		this.parentActivity = parentActivity;
 		this.exceptionHandlingActivityClass = exceptionHandlingActivityClass;
-		registerActivity(parentActivity);
-	}
-
-	public void registerActivity(Activity activity) {
-		activities.add(activity);
 	}
 	
 	@Override
@@ -111,22 +99,5 @@ public class SampleExceptionHandler implements UncaughtExceptionHandler {
     	System.exit(2);
     
     	parentActivity.startActivity(exceptionHandlingIntent);
-	}
-
-	private Activity getCurrentActivity() {
-        ActivityManager am = (ActivityManager) parentActivity.getSystemService( Activity.ACTIVITY_SERVICE);
- 
-        // get the info from the currently running task
-        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        RunningTaskInfo activityInfo = taskInfo.get(0);
-        Class runningActivityClass = activityInfo.getClass();
-	        
-        for (Activity activity : activities) {
-        	if (activity.getClass() == runningActivityClass) {
-        		return activity;
-        	}
-        }
-        
-		return parentActivity;
 	}
 }
