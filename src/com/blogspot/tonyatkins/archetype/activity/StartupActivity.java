@@ -48,6 +48,7 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new ButtonGridActivity());
 			activityClasses.add(new TouchEventActivity());
 			activityClasses.add(new ExceptionPitcherActivity());
+			activityClasses.add(new LauncherActivity());
 		}
 
 		@Override
