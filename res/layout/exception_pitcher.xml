@@ -6,14 +6,18 @@
   android:layout_height="match_parent">
 
 	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/exception_pitcher_exception_label"
-	/>
-	<Button 
-		android:id="@+id/exception_pitcher_exception_button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/exception_pitcher_exception_button"
-	/>
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_margin="15dip"
+	    android:text="@string/exception_pitcher_exception_label" />
+
+	<Button
+	    android:id="@+id/exception_pitcher_exception_button"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="20dip"
+	    android:text="@string/exception_pitcher_exception_button" />
+
 </LinearLayout>

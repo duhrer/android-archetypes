@@ -49,6 +49,7 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new TouchEventActivity());
 			activityClasses.add(new ExceptionPitcherActivity());
 			activityClasses.add(new LauncherActivity());
+			activityClasses.add(new ServiceControllerActivity());
 		}
 
 		@Override

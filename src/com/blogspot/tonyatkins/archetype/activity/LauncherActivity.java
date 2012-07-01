@@ -1,15 +1,10 @@
 package com.blogspot.tonyatkins.archetype.activity;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -37,14 +32,14 @@ public class LauncherActivity extends Activity {
 		setContentView(R.layout.launcher);
 		
 		ImageButton cameraButton = (ImageButton) findViewById(R.id.launcherCameraButton);
-		cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST,this));
+		cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST));
 		
 		
 		ImageButton imageButton = (ImageButton) findViewById(R.id.launcherMicrophoneButton);
-		imageButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.Audio.Media.RECORD_SOUND_ACTION, MICROPHONE_REQUEST,this));
+		imageButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.Audio.Media.RECORD_SOUND_ACTION, MICROPHONE_REQUEST));
 		
 		ImageButton voiceInputButton = (ImageButton) findViewById(R.id.launcherVoiceInputButton);
-		voiceInputButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST,this));
+		voiceInputButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST));
 	}
 	
 	@Override
@@ -109,41 +104,16 @@ public class LauncherActivity extends Activity {
 	private class ActivityLaunchListener implements OnClickListener {
 		private final String action;
 		private final int requestCode;
-		private final Context context;
 		
-		public ActivityLaunchListener(String action, int requestCode, Context context) {
+		public ActivityLaunchListener(String action, int requestCode) {
 			this.action = action;
 			this.requestCode = requestCode;
-			this.context = context;
 		}
 
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(action);
-			List<ResolveInfo> activities = getPackageManager().queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY);
-//			if (activities != null && activities.size() > 0) {
-				startActivityForResult(intent, requestCode);
-//			}
-//			else {
-//				Toast.makeText(context, "Unable to launch external activity as there's no application that can handle the request.", Toast.LENGTH_LONG).show();
-//			}
-		}
-	}
-	
-	private class UnableToComplyListener implements OnClickListener {
-		private final String message;
-		private final Context context;
-		
-		
-		public UnableToComplyListener(String message, Context context) {
-			this.message = message;
-			this.context = context;
-		}
-
-
-		@Override
-		public void onClick(View v) {
-			Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+			startActivityForResult(intent, requestCode);
 		}
 	}
 }
