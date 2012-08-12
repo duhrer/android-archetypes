@@ -9,6 +9,7 @@
     <string name="exception_pitcher_activity_label">Exception Pitcher Demo</string>
     <string name="exception_pitcher_exception_button">Throw Exception</string>
     <string name="exception_pitcher_exception_label">Touch the button to throw an exception.</string>
+    <string name="fragment_flinger_activity_label">Fragment Flinger</string>
     <string name="launcher_activity_label">Activity Launcher Demo</string>
     <string name="launcher_activity_exception_message">Unable to find an application to handle action:</string>
     <string name="launcher_camera_button_label">Take a Picture</string>

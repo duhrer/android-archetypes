@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="11" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -34,6 +34,9 @@
         <activity
             android:name=".activity.ExceptionCatcherActivity"
             android:label="@string/exception_catcher_activity_label" />
+        <activity
+            android:name=".activity.FragmentFlingerActivity"
+            android:label="@string/fragment_flinger_activity_label" />
         <activity
             android:name=".activity.ImageMaskActivity"
             android:label="@string/image_mask_activity_label" />
