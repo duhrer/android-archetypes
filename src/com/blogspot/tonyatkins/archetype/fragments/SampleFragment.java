@@ -1,13 +1,13 @@
 package com.blogspot.tonyatkins.archetype.fragments;
 
-import com.blogspot.tonyatkins.archetype.R;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.blogspot.tonyatkins.archetype.R;
 
 public class SampleFragment extends Fragment {
 	private final String message;
