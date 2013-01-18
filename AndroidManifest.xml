@@ -54,7 +54,8 @@
             android:name=".activity.TouchEventActivity"
             android:label="@string/touch_event_activity_label" />
         <activity
-            android:name=".activity.RecordSoundActivity"
+            android:exported="false"
+            android:name="com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity"
             android:label="@string/recorder_event_activity_label" >
             <intent-filter>
                 <action android:name="android.provider.MediaStore.RECORD_SOUND" />
