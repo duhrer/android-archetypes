@@ -16,7 +16,6 @@
     <string name="launcher_camera_button_label">Take a Picture</string>
     <string name="launcher_microphone_button_label">Record a Sound</string>
     <string name="launcher_voice_input_button_label">Voice Input</string>
-    <string name="recorder_event_activity_label">Record a Sound</string>
     <string name="service_controller_activity_label">Service Controller Demo</string>
     <string name="startup_activity_label">Android Archetypes</string>
     <string name="touch_event_activity_label">Touch Event Demo</string>
