@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.blogspot.tonyatkins.archetype.R;
+import com.blogspot.tonyatkins.recorder.Constants;
+import com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity;
 
 public class LauncherActivity extends Activity {
 	private static final int CAMERA_REQUEST      = 1234;
@@ -35,8 +37,11 @@ public class LauncherActivity extends Activity {
 		cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST));
 		
 		
-		ImageButton imageButton = (ImageButton) findViewById(R.id.launcherMicrophoneButton);
-		imageButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.Audio.Media.RECORD_SOUND_ACTION, MICROPHONE_REQUEST));
+		ImageButton recordButton = (ImageButton) findViewById(R.id.launcherMicrophoneButton);
+		Bundle recordingBundle = new Bundle();
+		recordingBundle.putString(RecordSoundActivity.OUTPUT_DIR_KEY, Constants.SOUND_DIRECTORY);
+		recordingBundle.putString(RecordSoundActivity.FILE_NAME_KEY, "long-jacket");
+		recordButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.Audio.Media.RECORD_SOUND_ACTION, MICROPHONE_REQUEST,recordingBundle));
 		
 		ImageButton voiceInputButton = (ImageButton) findViewById(R.id.launcherVoiceInputButton);
 		voiceInputButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST));
@@ -104,15 +109,25 @@ public class LauncherActivity extends Activity {
 	private class ActivityLaunchListener implements OnClickListener {
 		private final String action;
 		private final int requestCode;
+		private Bundle bundle;
 		
 		public ActivityLaunchListener(String action, int requestCode) {
 			this.action = action;
 			this.requestCode = requestCode;
 		}
+		
+		public ActivityLaunchListener(String action, int requestCode, Bundle bundle) {
+			this.action = action;
+			this.requestCode = requestCode;
+			this.bundle = bundle;
+		}
 
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(action);
+			if (bundle != null) {
+				intent.putExtras(bundle);
+			}
 			startActivityForResult(intent, requestCode);
 		}
 	}
