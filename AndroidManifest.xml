@@ -53,7 +53,7 @@
             android:name=".activity.TouchEventActivity"
             android:label="@string/touch_event_activity_label" />
         <activity
-            android:icon="@drawable/onair"
+            android:icon="@drawable/icon"
             android:exported="false"
             android:name="com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity"
             android:label="@string/recorder_event_activity_label" >
@@ -62,7 +62,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name="com.blogspot.tonyatkins.picker.activity.FilePickerActivity"
+            android:icon="@drawable/icon" >
+            <intent-filter>
+                <action android:name="com.blogspot.tonyatkins.picker.action.FILE_PICKER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <service
             android:name=".service.ArchetypeService"
             android:enabled="true"
