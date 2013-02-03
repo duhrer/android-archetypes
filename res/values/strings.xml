@@ -19,4 +19,5 @@
     <string name="service_controller_activity_label">Service Controller Demo</string>
     <string name="startup_activity_label">Android Archetypes</string>
     <string name="touch_event_activity_label">Touch Event Demo</string>
+    <string name="launcher_file_picker_button_label">Choose File</string>
 </resources>

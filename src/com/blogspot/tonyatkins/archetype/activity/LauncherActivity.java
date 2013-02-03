@@ -1,5 +1,6 @@
 package com.blogspot.tonyatkins.archetype.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -22,9 +23,11 @@ import com.blogspot.tonyatkins.recorder.Constants;
 import com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity;
 
 public class LauncherActivity extends Activity {
+	private static final int CROP_REQUEST        = 23;
 	private static final int CAMERA_REQUEST      = 1234;
 	private static final int MICROPHONE_REQUEST  = 2345;
 	private static final int VOICE_INPUT_REQUEST = 3456;
+	private static final int FILE_PICKER_REQUEST = 4567;
 	
 	
 	@Override
@@ -36,6 +39,8 @@ public class LauncherActivity extends Activity {
 		ImageButton cameraButton = (ImageButton) findViewById(R.id.launcherCameraButton);
 		cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST));
 		
+		ImageButton filePickerButton = (ImageButton) findViewById(R.id.launcherFilePickerButton);
+		filePickerButton.setOnClickListener(new ActivityLaunchListener(com.blogspot.tonyatkins.picker.Constants.ACTION_PICK_FILE, FILE_PICKER_REQUEST));
 		
 		ImageButton recordButton = (ImageButton) findViewById(R.id.launcherMicrophoneButton);
 		Bundle recordingBundle = new Bundle();
@@ -99,6 +104,26 @@ public class LauncherActivity extends Activity {
 					Toast.makeText(this, "Error getting voice input or no data returned.", Toast.LENGTH_LONG).show();
 				}
 				
+				break;
+			case FILE_PICKER_REQUEST:
+				if (data != null) {
+					Uri fileUri = data.getData();
+					if (fileUri != null) {
+						File file = new File(fileUri.getPath());
+						if (file.exists()) {
+							Toast.makeText(this, "Activity returned a URI that points to a file named '" + file.getName() + "' which is " + file.length() + " bytes in size.", Toast.LENGTH_LONG).show();
+						}
+						else {
+							Toast.makeText(this, "Activity returned a URI that points to a file named '" + file.getName() + "' which doesn't exist.", Toast.LENGTH_LONG).show();
+						}
+					}
+					else {
+						Toast.makeText(this, "No file URI returned.", Toast.LENGTH_LONG).show();
+					}
+				}
+				else {
+					Toast.makeText(this, "Error getting file input or no data returned.", Toast.LENGTH_LONG).show();
+				}
 				break;
 			default:
 				Toast.makeText(this, "Returned from unknown request.", Toast.LENGTH_LONG).show();
