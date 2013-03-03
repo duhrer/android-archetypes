@@ -15,12 +15,11 @@ import com.blogspot.tonyatkins.archetype.ButtonListAdapter;
 import com.blogspot.tonyatkins.archetype.SimulatedButton;
 
 public class GridDragListener implements OnDragListener {
-	public final static long NO_ID = -1;
-	
 	private final SimulatedButton button;
 	private final TreeSet<SimulatedButton> buttons;
 	private final Activity activity;
 	private final GridView gridView;
+	private float xPos = 0;
 	
 	public GridDragListener(SimulatedButton button, TreeSet<SimulatedButton> buttons, Activity activity, GridView gridView) {
 		this.button = button;
@@ -35,6 +34,7 @@ public class GridDragListener implements OnDragListener {
 
 		SimulatedButton draggedButton = (SimulatedButton) event.getLocalState();
 
+		
 		switch (action) {
 			case DragEvent.ACTION_DRAG_ENDED:
 				// Someone let go of a dragged view.  Reset my background
@@ -57,10 +57,11 @@ public class GridDragListener implements OnDragListener {
 				view.invalidate();
 				break;
 			case DragEvent.ACTION_DRAG_LOCATION:
-				// Used for awareness of stuff that's being dragged?
+				// Used for awareness of stuff that's being dragged
+				xPos = event.getX();
 				break;
 			case DragEvent.ACTION_DRAG_STARTED:
-				// Someone has picked a draggable view up
+				// Someone has picked a view up
 				view.getBackground().setColorFilter(Color.RED,Mode.MULTIPLY);
 				view.invalidate();
 				break;
@@ -69,10 +70,9 @@ public class GridDragListener implements OnDragListener {
 				
 				// Only reorder if I was dropped on a different button
 				if (draggedButton.getId() != button.getId()) {
-					// TODO:  go through the list of buttons and determine the new order.  basically, we need to set our new order, increment anything higher, and fill in the hole we left
+					// Go through the list of buttons and determine the new order.  basically, we need to set our new order, increment anything higher, and fill in the hole we left
 					int droppedSortOrder = button.getSortOrder();
-					int oldDraggedSortOrder = draggedButton.getSortOrder();
-					int newDraggedSortOrder = droppedSortOrder - 1;
+					int newDraggedSortOrder = xPos > (view.getWidth()/2) ? droppedSortOrder + 1 : droppedSortOrder -1;
 					draggedButton.setSortOrder(newDraggedSortOrder);
 					
 					Iterator<SimulatedButton> iterator = buttons.iterator();
