@@ -51,6 +51,7 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new FragmentFlingerActivity());
 			activityClasses.add(new LauncherActivity());
 			activityClasses.add(new ServiceControllerActivity());
+			activityClasses.add(new ImageResourceBrowserActivity());
 		}
 
 		@Override
