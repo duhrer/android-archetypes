@@ -48,8 +48,17 @@ public class LauncherActivity extends Activity {
 		recordingBundle.putString(RecordSoundActivity.FILE_NAME_KEY, "long-jacket");
 		recordButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.Audio.Media.RECORD_SOUND_ACTION, MICROPHONE_REQUEST,recordingBundle));
 		
-		ImageButton voiceInputButton = (ImageButton) findViewById(R.id.launcherVoiceInputButton);
-		voiceInputButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST));
+		ImageButton voiceInputButton = (ImageButton) findViewById(R.id.launcherVoiceInputWebSearchButton);
+		Bundle voiceInputBundle = new Bundle();
+		voiceInputBundle.putString(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+		voiceInputBundle.putString(RecognizerIntent.EXTRA_PROMPT, "Say something to test the web search language model.");
+		voiceInputButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST,voiceInputBundle));
+		
+		ImageButton voiceInputFreeFormButton = (ImageButton) findViewById(R.id.launcherVoiceInputFreeFormButton);
+		Bundle freeFormBundle = new Bundle();
+		freeFormBundle.putString(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		freeFormBundle.putString(RecognizerIntent.EXTRA_PROMPT, "Say something to test the free form language model.");
+		voiceInputFreeFormButton.setOnClickListener(new ActivityLaunchListener(RecognizerIntent.ACTION_RECOGNIZE_SPEECH, VOICE_INPUT_REQUEST,freeFormBundle));
 	}
 	
 	@Override
@@ -98,7 +107,7 @@ public class LauncherActivity extends Activity {
 				}
 				
 				if (matches != null && matches.size() > 0) {
-					Toast.makeText(this, "Voice input returned " +  matches.size() + " matches.", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Voice input returned " +  matches.size() + " matches (" + matches.toString() + ").", Toast.LENGTH_LONG).show();
 				}
 				else {
 					Toast.makeText(this, "Error getting voice input or no data returned.", Toast.LENGTH_LONG).show();
