@@ -6,14 +6,23 @@
 
     <uses-sdk android:minSdkVersion="11" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />    
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
+    <uses-feature
+        android:name="android.software.live_wallpaper"
         android:required="false" />
 
     <application
@@ -41,6 +50,9 @@
             android:name=".activity.FragmentFlingerActivity"
             android:label="@string/fragment_flinger_activity_label" />
         <activity
+            android:name=".activity.HttpRequestActivity"
+            android:label="@string/http_request_activity_label" />
+        <activity
             android:name=".activity.ImageMaskActivity"
             android:label="@string/image_mask_activity_label" />
         <activity
@@ -50,18 +62,50 @@
             android:name=".activity.LauncherActivity"
             android:label="@string/launcher_activity_label" />
         <activity
+            android:name=".activity.NfcActivity"
+            android:label="@string/nfc_activity_label" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.ServiceControllerActivity"
             android:label="@string/service_controller_activity_label" />
         <activity
             android:name=".activity.TouchEventActivity"
             android:label="@string/touch_event_activity_label" />
         <activity
-            android:icon="@drawable/icon"
-            android:exported="false"
+            android:name=".activity.LiveWallpaperPreferencesActivity"
+            android:exported="true"
+            android:label="@string/live_wallpaper_activity_label" />
+
+        <service
+            android:name=".service.WallpaperService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper" >
+            </meta-data>
+        </service>
+
+        <activity
             android:name="com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity"
+            android:exported="false"
+            android:icon="@drawable/icon"
             android:label="@string/recorder_event_activity_label" >
             <intent-filter>
                 <action android:name="android.provider.MediaStore.RECORD_SOUND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -70,10 +114,11 @@
             android:icon="@drawable/icon" >
             <intent-filter>
                 <action android:name="com.blogspot.tonyatkins.picker.action.FILE_PICKER" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
+
         <service
             android:name=".service.ArchetypeService"
             android:enabled="true"
