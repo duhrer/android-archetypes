@@ -73,6 +73,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.PreferenceSettingActivity"
+            android:label="@string/preference_setting_activity_label" />
+        <activity
             android:name=".activity.ServiceControllerActivity"
             android:label="@string/service_controller_activity_label" />
         <activity

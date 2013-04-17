@@ -31,6 +31,8 @@
     <string name="nfc_messages_label">NFC Messages:</string>
     <string name="nfc_tag_default_text">No Tag Detected</string>
     <string name="nfc_tag_label">NFC Tag:</string>
+    <string name="pref_setting_instructions">Use these buttons to set the preferences for Free Speech remotely.</string>
+    <string name="preference_setting_activity_label">Set Preferences Remotely</string>
     <string name="service_controller_activity_label">Service Controller Demo</string>
     <string name="startup_activity_label">Android Archetypes</string>
     <string name="touch_event_activity_label">Touch Event Demo</string>
