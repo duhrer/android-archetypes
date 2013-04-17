@@ -53,6 +53,8 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new ServiceControllerActivity());
 			activityClasses.add(new ImageResourceBrowserActivity());
 			activityClasses.add(new HttpRequestActivity());
+			activityClasses.add(new HttpRequestActivity());
+			activityClasses.add(new PreferenceSettingActivity());
 		}
 
 		@Override
