@@ -85,6 +85,9 @@
             android:name=".activity.LiveWallpaperPreferencesActivity"
             android:exported="true"
             android:label="@string/live_wallpaper_activity_label" />
+        <activity
+                android:name=".activity.SpeechRecognizerActivity"
+                android:label="@string/recognizer_activity_label" />
 
         <service
             android:name=".service.WallpaperService"

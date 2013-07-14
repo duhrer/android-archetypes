@@ -37,4 +37,7 @@
     <string name="startup_activity_label">Android Archetypes</string>
     <string name="touch_event_activity_label">Touch Event Demo</string>
     <string name="wallpaper_desc">Live Wallpaper Demo</string>
+    <string name="recognizer_activity_label">Speech Recognizer Demo</string>
+    <string name="recognizer_results_default_text">No recognizer results, touch button to use voice input.</string>
+    <string name="recognizer_voice_input_button">Say Something</string>
 </resources>

@@ -53,8 +53,8 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new ServiceControllerActivity());
 			activityClasses.add(new ImageResourceBrowserActivity());
 			activityClasses.add(new HttpRequestActivity());
-			activityClasses.add(new HttpRequestActivity());
 			activityClasses.add(new PreferenceSettingActivity());
+			activityClasses.add(new SpeechRecognizerActivity());
 		}
 
 		@Override
@@ -82,7 +82,7 @@ public class StartupActivity extends Activity {
 			Activity childActivity = (Activity) getItem(position);
 			
 			Button button = new Button(activity);
-			
+
 			if (childActivity.getTitle() != null && childActivity.getTitle().length() > 0) {
 				button.setText(childActivity.getTitle());
 			}
