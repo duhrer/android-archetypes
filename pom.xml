@@ -56,6 +56,12 @@
     </dependency>
     
     <dependency>
+      <groupId>com.google.android</groupId>
+      <artifactId>support-v4</artifactId>
+      <version>r7</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.blogspot.tonyatkins</groupId>
       <artifactId>picker</artifactId>
       <type>apklib</type>
@@ -82,7 +88,7 @@
       <plugin>
 	<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 	<artifactId>android-maven-plugin</artifactId>
-	<version>3.5.1</version>
+	<version>3.6.0</version>
 	<configuration>
 	  <sdk>
 	    <!-- platform or api level (api level 4 = platform 1.6) -->
