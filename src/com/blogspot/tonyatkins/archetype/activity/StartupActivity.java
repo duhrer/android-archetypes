@@ -55,6 +55,7 @@ public class StartupActivity extends Activity {
 			activityClasses.add(new HttpRequestActivity());
 			activityClasses.add(new PreferenceSettingActivity());
 			activityClasses.add(new SpeechRecognizerActivity());
+            activityClasses.add(new RandomDiceActivity());
 		}
 
 		@Override
