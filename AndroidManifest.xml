@@ -82,6 +82,9 @@
             android:name=".activity.TouchEventActivity"
             android:label="@string/touch_event_activity_label" />
         <activity
+            android:name=".activity.RandomDiceActivity"
+            android:label="@string/random_dice_activity_label" />
+        <activity
             android:name=".activity.LiveWallpaperPreferencesActivity"
             android:exported="true"
             android:label="@string/live_wallpaper_activity_label" />

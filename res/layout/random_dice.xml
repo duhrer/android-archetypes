@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A comparison of randomization methods for dice..."
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/darkgrayoutline"
+        android:layout_marginTop="10px"
+        android:padding="10px">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Awaiting Results..."
+            android:id="@+id/randomDiceOutputView"
+            android:layout_gravity="right"
+            android:gravity="center_horizontal"
+            android:padding="10px"
+            android:background="@drawable/darkgrayoutline" />
+    </ScrollView>
+
+</LinearLayout>
