@@ -41,4 +41,5 @@
     <string name="recognizer_results_default_text">No recognizer results, touch button to use voice input.</string>
     <string name="recognizer_voice_input_button">Say Something</string>
     <string name="random_dice_activity_label">Random Dice</string>
+    <string name="launcher_gallery_button_label">Choose a picture from the gallery.</string>
 </resources>
