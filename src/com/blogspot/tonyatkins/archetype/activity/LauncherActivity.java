@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
@@ -19,15 +23,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.blogspot.tonyatkins.archetype.R;
+import com.blogspot.tonyatkins.picker.activity.FilePickerActivity;
+import com.blogspot.tonyatkins.picker.adapter.FileIconListAdapter;
 import com.blogspot.tonyatkins.recorder.Constants;
 import com.blogspot.tonyatkins.recorder.activity.RecordSoundActivity;
 
 public class LauncherActivity extends Activity {
-	private static final int CROP_REQUEST        = 23;
-	private static final int CAMERA_REQUEST      = 1234;
-	private static final int MICROPHONE_REQUEST  = 2345;
-	private static final int VOICE_INPUT_REQUEST = 3456;
-	private static final int FILE_PICKER_REQUEST = 4567;
+	private static final int CROP_REQUEST           = 23;
+	private static final int CAMERA_REQUEST         = 1234;
+    private static final int GALLERY_REQUEST        = 1324;
+	private static final int MICROPHONE_REQUEST     = 2345;
+	private static final int VOICE_INPUT_REQUEST    = 3456;
+	private static final int FILE_PICKER_REQUEST    = 4567;
 	
 	
 	@Override
@@ -35,11 +42,24 @@ public class LauncherActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.launcher);
-		
-		ImageButton cameraButton = (ImageButton) findViewById(R.id.launcherCameraButton);
-		cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST));
-		
-		ImageButton filePickerButton = (ImageButton) findViewById(R.id.launcherFilePickerButton);
+
+        ImageButton cameraButton = (ImageButton) findViewById(R.id.launcherCameraButton);
+        cameraButton.setOnClickListener(new ActivityLaunchListener(android.provider.MediaStore.ACTION_IMAGE_CAPTURE, CAMERA_REQUEST));
+
+        ImageButton galleryButton = (ImageButton) findViewById(R.id.launcherGalleryButton);
+        if (Build.VERSION.SDK_INT < 19) {
+            Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            galleryIntent.setType("image/*");
+            galleryButton.setOnClickListener(new ActivityLaunchListener(galleryIntent, GALLERY_REQUEST));
+        }
+        else {
+            Intent galleryIntent = new Intent(com.blogspot.tonyatkins.picker.Constants.ACTION_PICK_FILE);
+            galleryIntent.putExtra(FilePickerActivity.FILE_TYPE_BUNDLE, FileIconListAdapter.IMAGE_FILE_TYPE);
+            galleryButton.setOnClickListener(new ActivityLaunchListener(galleryIntent, FILE_PICKER_REQUEST));
+        }
+
+
+        ImageButton filePickerButton = (ImageButton) findViewById(R.id.launcherFilePickerButton);
 		filePickerButton.setOnClickListener(new ActivityLaunchListener(com.blogspot.tonyatkins.picker.Constants.ACTION_PICK_FILE, FILE_PICKER_REQUEST));
 		
 		ImageButton recordButton = (ImageButton) findViewById(R.id.launcherMicrophoneButton);
@@ -80,6 +100,20 @@ public class LauncherActivity extends Activity {
 				}
 			
 				break;
+            case GALLERY_REQUEST:
+                if (data != null) {
+                    Uri uri = data.getData();
+                    Cursor cursor = getContentResolver().query(uri, new String[] { MediaStore.Images.Media.DATA }, null, null, null);
+                    cursor.moveToFirst();
+                    final String imageFilePath = cursor.getString(0);
+                    cursor.close();
+
+                    Toast.makeText(this, "Gallery request returned file '" + imageFilePath + "'...",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(this, "Gallery request did not return any data.", Toast.LENGTH_LONG).show();
+                }
+                break;
 			case MICROPHONE_REQUEST:
 				Uri audioUri = null;
 				if (data != null) {
@@ -141,24 +175,34 @@ public class LauncherActivity extends Activity {
 	}
 	
 	private class ActivityLaunchListener implements OnClickListener {
-		private final String action;
+        private final Intent intent;
 		private final int requestCode;
 		private Bundle bundle;
 		
 		public ActivityLaunchListener(String action, int requestCode) {
-			this.action = action;
+            intent = new Intent(action);
 			this.requestCode = requestCode;
 		}
 		
 		public ActivityLaunchListener(String action, int requestCode, Bundle bundle) {
-			this.action = action;
+            intent = new Intent(action);
 			this.requestCode = requestCode;
 			this.bundle = bundle;
 		}
 
+        public ActivityLaunchListener(Intent intent, int requestCode) {
+            this.intent = intent;
+            this.requestCode = requestCode;
+        }
+
+        public ActivityLaunchListener(Intent intent, int requestCode, Bundle bundle) {
+            this.intent = intent;
+            this.requestCode = requestCode;
+            this.bundle = bundle;
+        }
+
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(action);
 			if (bundle != null) {
 				intent.putExtras(bundle);
 			}
